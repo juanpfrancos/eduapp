@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My APP</title>
+</head>
+<body>
+    <header>
+        <h1>My APP</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Sign In</a></li>
+                    <li><a href="{% url 'register' %}">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 My APP</p>
+    </footer>
+</body>
+</html>
