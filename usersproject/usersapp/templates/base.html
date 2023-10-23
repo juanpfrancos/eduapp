@@ -26,7 +26,6 @@
                   </ul>
                 </details>
               </li>
-              <li><a href="{% url 'login' %}">Inicio</a></li>
               {% if user.is_authenticated %}
                   <li><a href="{% url 'logout' %}">logout</a></li>
               {% else %}
