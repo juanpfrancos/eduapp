@@ -30,5 +30,10 @@ def user_logout(request):
 
 @login_required
 def user_welcome(request):
-    if request.user:
-        return render(request, 'registration/welcome.html')
+    user = request.user
+    context = {
+        'username': user.name,
+        'email': user.email,
+    }
+    
+    return render(request, 'registration/welcome.html', context)

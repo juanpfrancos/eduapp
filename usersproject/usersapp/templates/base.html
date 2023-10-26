@@ -27,6 +27,7 @@
                 </details>
               </li>
               {% if user.is_authenticated %}
+                  {{email}}
                   <li><a href="{% url 'logout' %}">logout</a></li>
               {% else %}
                   <li><a href="{% url 'login' %}">Sign In</a></li>
