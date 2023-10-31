@@ -1,26 +1,18 @@
 from pathlib import Path
 from decouple import config
 import os
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [config('HOST')]
 
-
-# Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
+    'django.contrib.sites',
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -59,10 +51,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "usersproject.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES={
     'default':
     {
@@ -72,10 +60,6 @@ DATABASES={
     'PASSWORD': config('DB_PASSWORD'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -93,9 +77,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -104,16 +85,38 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = 'static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 AUTH_USER_MODEL = 'usersapp.CustomUser'
+
 LOGIN_URL = config('LOGIN_URL')
+
 LOGOUT_URL = config('LOGOUT_URL')
+
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = config('EMAIL_HOST')
+
+EMAIL_PORT = config('EMAIL_PORT')
+
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+EMAIL_DEBUG = config('EMAIL_DEBUG')
+
+PASSWORD_RESET_SUBJECT_TEMPLATE = 'registration/password_reset_subject.txt'
+
+PASSWORD_RESET_EMAIL_TEMPLATE = 'registration/password_reset_email.html'
+
+PASSWORD_RESET_TIMEOUT = 259200
+
+SITE_ID = 1 
