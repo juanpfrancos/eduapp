@@ -119,4 +119,4 @@ PASSWORD_RESET_EMAIL_TEMPLATE = 'registration/password_reset_email.html'
 
 PASSWORD_RESET_TIMEOUT = 259200
 
-SITE_ID = 1 
+SITE_ID = config('SITE_ID')
