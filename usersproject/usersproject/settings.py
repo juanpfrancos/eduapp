@@ -113,10 +113,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 EMAIL_DEBUG = config('EMAIL_DEBUG')
 
-PASSWORD_RESET_SUBJECT_TEMPLATE = 'registration/password_reset_subject.txt'
-
-PASSWORD_RESET_EMAIL_TEMPLATE = 'registration/password_reset_email.html'
-
 PASSWORD_RESET_TIMEOUT = 259200
 
 SITE_ID = config('SITE_ID')
