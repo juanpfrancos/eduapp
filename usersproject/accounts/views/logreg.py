@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import RegistrationForm, LoginForm
+from ..forms import RegistrationForm, LoginForm
 
 def register(request):
     if request.method == 'POST':

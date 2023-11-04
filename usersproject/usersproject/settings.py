@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "usersapp",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -91,7 +91,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'usersapp.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_URL = config('LOGIN_URL')
 
@@ -115,4 +115,4 @@ EMAIL_DEBUG = config('EMAIL_DEBUG')
 
 PASSWORD_RESET_TIMEOUT = 259200
 
-SITE_ID = config('SITE_ID')
+SITE_ID = int(config('SITE_ID'))
