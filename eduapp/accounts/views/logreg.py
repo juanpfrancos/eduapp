@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from ..forms import RegistrationForm, LoginForm
 
