@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+    <link
+    href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+    rel="stylesheet"
+    />
     <h1>Lista de Registros Diarios</h1>
 
     <!-- Formulario de filtro -->
@@ -20,43 +24,19 @@
         </select>
         <button type="submit">Filtrar</button>
     </form>
-    
-    <table>
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Empleado</th>
-            <th scope="col">Tiempo Suficiente:</th>
-            <th scope="col">Actividades de Interés</th>
-            <th scope="col">Material Agradable</th>
-            <th scope="col">Trabajo Fuera del Aula</th>
-            <th scope="col">Involucrados</th>
-            <th scope="col">Atentos: {{ registro.atentos }}</th>
-            <th scope="col">Interrupciones: {{ registro.interrupciones }}</th>
-            <th scope="col">Influencias: {{ registro.influencias }}</th>
-            <th scope="col">Situación Relevante: {{ registro.situacion_relevante }}</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for registro in registros %}
-            <tr>
-                <th scope="row">{{ registro.id }}</th>
-                <td>{{ registro.fecha }}</td>
-                <td>{{ registro.empleado }}</td>
-                <td>{{ registro.tiempo_suficiente }}</td>
-                <td>{{ registro.actividades_interesantes }}</td>
-                <td>{{ registro.material_agradable }}</td>
-                <td>{{ registro.trabajo_fuera_aula }}</td>
-                <td>{{ registro.involucrados }}</td>
-                <td>{{ registro.atentos }}</td>
-                <td>{{ registro.interrupciones }}</td>
-                <td>{{ registro.influencias }}</td>
-                <td>{{ registro.situacion_relevante }}</td>
-            </tr>
-        {% empty %}
-            <li>No hay registros disponibles.</li>
-        {% endfor %}  
-        </tbody>
-      </table>
+    <div id="w"></div>
+
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+        var registrosDjango = {{ registros|safe }};
+        console.log(registrosDjango);
+        new gridjs.Grid({
+            columns: ["id", "fecha", "empleado", "tiempo_suficiente", "actividades_interesantes", "material_agradable", "trabajo_fuera_aula", "involucrados", "atentos", "interrupciones", "influencias", "situacion_relevante"],
+            data: registrosDjango,
+            search: true,
+            sort: true,
+            pagination: true,
+            resizable: true,
+        }).render(document.getElementById("w"));
+    </script>
 {% endblock %}

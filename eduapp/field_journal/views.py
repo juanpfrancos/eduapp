@@ -3,6 +3,8 @@ from django.utils.datetime_safe import datetime
 from django.shortcuts import render, redirect
 from .forms import RegistroForm
 from .models import Registro
+from json import dumps 
+  
 
 
 @user_passes_test(lambda u: u.is_authenticated and u.role == 'user', login_url='/')
@@ -23,7 +25,7 @@ def crear_registro(request):
     return render(request, 'crear_registro.html', {'form': form})
 
 
-
+@user_passes_test(lambda u: u.is_authenticated and u.role == 'admin', login_url='/')
 def lista_registros(request):
     registros = Registro.objects.all()
     fechas = Registro.objects.values_list('fecha', flat=True).distinct()
@@ -37,9 +39,11 @@ def lista_registros(request):
         registros = registros.filter(fecha=fecha_filtro)
     if empleado_filtro:
         registros = registros.filter(empleado=empleado_filtro)
-
+    data = list(registros.values())
+    registros = list(map(lambda item: {**item, 'fecha': item['fecha'].strftime('%Y-%m-%d')}, data))
+    final = [{key: str(value) for key, value in data.items()} for data in registros]
     return render(request, 'lista_registros.html', {
-        'registros': registros,
+        'registros': dumps(final),
         'fechas': fechas,
         'empleados': empleados,
     })
