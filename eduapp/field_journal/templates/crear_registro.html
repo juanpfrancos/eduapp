@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
+    <ul>
+        <li>Nombre de usuario: {{ request.user.name }}</li>
+        <li>Rol: {{ request.user.role }}</li>
+    </ul>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <br>
+        <label for="{{ form.tiempo_suficiente.id_for_label }}">¿Tiempo suficiente?:</label>
+        {{ form.tiempo_suficiente }}
+        <br>
+        {{ form.actividades_interesantes.label_tag }}
+        {{ form.actividades_interesantes }} 
+        <br>
+        {{ form.material_agradable.label_tag }}
+        {{ form.material_agradable }}
+        <br>
+        {{ form.trabajo_fuera_aula.label_tag }}
+        {{ form.trabajo_fuera_aula }}
+        <br>
+        {{ form.involucrados.label_tag }}
+        {{ form.involucrados }}
+        <br>
+        {{ form.atentos.label_tag }}
+        {{ form.atentos }}
+        <br>
+        {{ form.interrupciones.label_tag }}
+        {{ form.interrupciones }}
+        <br>
+        {{ form.influencias.label_tag }}
+        {{ form.influencias }}
+        <br>
+        {{ form.situacion_relevante.label_tag }}
+        {{ form.situacion_relevante }}
+        <br>
+        {{ form.observaciones.label_tag }}
+        {{ form.observaciones }}
         <button type="submit">Guardar</button>
     </form>
 {% endblock %}

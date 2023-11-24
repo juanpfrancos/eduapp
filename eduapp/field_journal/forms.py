@@ -4,4 +4,4 @@ from .models import Registro
 class RegistroForm(forms.ModelForm):
     class Meta:
         model = Registro
-        exclude = ['fecha']  # Excluye el campo fecha para que no lo modifiquen
+        exclude = ['fecha','empleado']  # Excluye el campo fecha para que no lo modifiquen

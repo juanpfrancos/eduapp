@@ -2,4 +2,9 @@
 {% block content %}
 <h2>Welcome {{ username }}</h2>
 <h2>{{role}} Role</h2>
+<nav class="container-fluid">
+    <ul>
+      <li><a href="{% url 'crear_registro' %}">Crear Registro</a></li>
+    </ul>
+  </nav>
 {% endblock %}
