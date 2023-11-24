@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My App</title>
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+</head>
+<body>
+        <nav class="container-fluid">
+            <ul>
+              <li>
+                <a href="/" class="contrast"><strong>My APP</strong></a>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <details role="list" dir="rtl">
+                  <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
+                  <ul role="listbox">
+                    <li><a href="#" data-theme-switcher="light">Light</a></li>
+                    <li><a href="#" data-theme-switcher="dark">Dark</a></li>
+                  </ul>
+                </details>
+              </li>
+              {% if user.is_authenticated %}
+                  {{email}}
+                  <li><a href="{% url 'logout' %}">logout</a></li>
+              {% endif %}
+            </ul>
+
+          </nav>
+    <main class="container">
+        {% block content %}{% endblock %}        
+    </main>
+    <footer class="container-fluid">
+        <p>&copy; 2023 My APP</p>
+    </footer>
+    <script src="{% static 'js/minimal-theme-switcher.js' %}"></script>
+</body>
+</html>

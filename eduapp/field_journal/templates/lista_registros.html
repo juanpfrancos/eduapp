@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Lista de Registros Diarios</h1>
+
+    <!-- Formulario de filtro -->
+    <form method="GET">
+        <label for="fecha_filtro">Filtrar por Fecha:</label>
+        <select name="fecha_filtro" id="fecha_filtro">
+            <option value="">Todas las fechas</option>
+            {% for fecha in fechas %}
+                <option value="{{ fecha|date:'Y-m-d' }}">{{ fecha|date:'Y-m-d' }}</option>
+            {% endfor %}
+        </select>
+        <label for="empleado_filtro">Filtrar por Empleado:</label>
+        <select name="empleado_filtro" id="empleado_filtro">
+            <option value="">Todos los empleados</option>
+            {% for empleado in empleados %}
+                <option value="{{ empleado }}">{{ empleado }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrar</button>
+    </form>
+    
+
+    <ul>
+        {% for registro in registros %}
+            <li>{{ registro.fecha }} - {{ registro.empleado }}</li>
+            <!-- ... (mostrar otros campos) ... -->
+            <ul>
+                <li>Tiempo Suficiente: {{ registro.tiempo_suficiente }}</li>
+                <li>Actividades de Interés: {{ registro.actividades_interesantes }}</li>
+                <li>Material Agradable: {{ registro.material_agradable }}</li>
+                <li>Trabajo Fuera del Aula: {{ registro.trabajo_fuera_aula }}</li>
+                <li>Involucrados: {{ registro.involucrados }}</li>
+                <li>Atentos: {{ registro.atentos }}</li>
+                <li>Interrupciones: {{ registro.interrupciones }}</li>
+                <li>Influencias: {{ registro.influencias }}</li>
+                <li>Situación Relevante: {{ registro.situacion_relevante }}</li>
+            </ul>
+        {% empty %}
+            <li>No hay registros disponibles.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
