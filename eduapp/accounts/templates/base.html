@@ -14,29 +14,32 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
 </head>
 <body>
-        <nav class="container-fluid">
-            <ul>
-              <li>
-                <a href="/" class="contrast"><strong>My APP</strong></a>
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <details role="list" dir="rtl">
-                  <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
-                  <ul role="listbox">
-                    <li><a href="#" data-theme-switcher="light">Light</a></li>
-                    <li><a href="#" data-theme-switcher="dark">Dark</a></li>
-                  </ul>
-                </details>
-              </li>
-              {% if user.is_authenticated %}
-                  {{email}}
-                  <li><a href="{% url 'logout' %}">logout</a></li>
-              {% endif %}
-            </ul>
-
-          </nav>
+  <nav class="container-fluid">
+    {% if user.is_authenticated %}
+    <ul>
+      <li>
+        <a href="/" class="contrast">
+          <img src="{% static 'logo-header.webp' %}" alt="logo" />
+        </a>
+      </li>
+    </ul>
+    {% endif %}
+    <ul>
+      <li>
+        <details role="list" dir="rtl">
+          <summary aria-haspopup="listbox" role="link" class="secondary">Theme</summary>
+          <ul role="listbox">
+            <li><a href="#" data-theme-switcher="light">Light</a></li>
+            <li><a href="#" data-theme-switcher="dark">Dark</a></li>
+          </ul>
+        </details>
+      </li>
+      {% if user.is_authenticated %}
+          {{email}}
+          <li><a href="{% url 'logout' %}">logout</a></li>
+      {% endif %}
+    </ul>
+  </nav>
     <main class="container">
         {% block content %}{% endblock %}        
     </main>
