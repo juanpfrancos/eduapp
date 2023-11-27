@@ -1,41 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
-    <ul>
-        <li>Nombre de usuario: {{ request.user.name }}</li>
-        <li>Rol: {{ request.user.role }}</li>
-    </ul>
-    <form method="post">
-        {% csrf_token %}
-        <br>
-        <label for="{{ form.tiempo_suficiente.id_for_label }}">¿Tiempo suficiente?:</label>
-        {{ form.tiempo_suficiente }}
-        <br>
-        {{ form.actividades_interesantes.label_tag }}
-        {{ form.actividades_interesantes }} 
-        <br>
-        {{ form.material_agradable.label_tag }}
-        {{ form.material_agradable }}
-        <br>
-        {{ form.trabajo_fuera_aula.label_tag }}
-        {{ form.trabajo_fuera_aula }}
-        <br>
-        {{ form.involucrados.label_tag }}
-        {{ form.involucrados }}
-        <br>
-        {{ form.atentos.label_tag }}
-        {{ form.atentos }}
-        <br>
-        {{ form.interrupciones.label_tag }}
-        {{ form.interrupciones }}
-        <br>
-        {{ form.influencias.label_tag }}
-        {{ form.influencias }}
-        <br>
-        {{ form.situacion_relevante.label_tag }}
-        {{ form.situacion_relevante }}
-        <br>
-        {{ form.observaciones.label_tag }}
-        {{ form.observaciones }}
-        <button type="submit">Guardar</button>
-    </form>
-{% endblock %}
+<ul>
+    <li>Nombre de usuario: {{ request.user.name }}</li>
+    <li>Rol: {{ request.user.role }}</li>
+    <li>Sede: {{ request.user.course }}</li>
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <div class="grid">
+        <div>
+            <label>
+                {{ form.involucrados.field.label }}
+                {{ form.involucrados }}
+            </label>
+        </div>
+        <div>
+            <label>
+                {{ form.atentos.field.label }}
+                {{ form.atentos }}
+            </label>
+        </div>    
+    </div>
+    <div class="grid">
+        <div>
+            <label>
+                {{ form.actividades_interesantes.field.label }}
+                {{ form.actividades_interesantes }} 
+            </label>
+        </div>
+        <div>
+            <label>
+                {{ form.tiempo_suficiente.field.label }}
+                {{ form.tiempo_suficiente }}
+            </label>
+        </div>
+      </div>
+    <div class="grid">
+        <div>
+            <label>    
+            {{ form.material_agradable.field.label }}
+            {{ form.material_agradable }}
+            </label>
+        </div>
+        <div>
+            <label>
+            {{ form.trabajo_fuera_aula.field.label }}
+            {{ form.trabajo_fuera_aula }}
+            </label>
+        </div>   
+    </div>
+    <div class="grid">
+        <div>
+            <label>
+            {{ form.interrupciones.field.label }}
+            {{ form.interrupciones }}
+            </label>
+        </div>
+    </div>
+    <div class="grid">
+        <div>
+            <label>
+                {{ form.influencias.field.label }}
+                {{ form.influencias }}
+            </label>
+        </div>
+        <div>
+            <label>
+                {{ form.situacion_relevante.field.label }}
+                {{ form.situacion_relevante }}
+            </label>
+        </div>
+    </div>
+    <button type="submit">Guardar</button>
+</form>
+
+      {% endblock %}

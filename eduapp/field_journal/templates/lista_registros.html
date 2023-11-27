@@ -1,20 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_journal.html' %}
 {% block content %}
-    <link
-    href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
-    rel="stylesheet"
-    />
-    <h1>Lista de Registros Diarios</h1>
 
-    <!-- Formulario de filtro -->
+    <h1>Lista de Registros Diarios</h1>    
     <form method="GET">
         <label for="fecha_filtro">Filtrar por Fecha:</label>
-        <select name="fecha_filtro" id="fecha_filtro">
-            <option value="">Todas las fechas</option>
-            {% for fecha in fechas %}
-                <option value="{{ fecha|date:'Y-m-d' }}">{{ fecha|date:'Y-m-d' }}</option>
-            {% endfor %}
-        </select>
+        <input type="date" name="fecha_filtro" id="fecha_filtro">
+    
         <label for="empleado_filtro">Filtrar por Empleado:</label>
         <select name="empleado_filtro" id="empleado_filtro">
             <option value="">Todos los empleados</option>
@@ -22,8 +13,16 @@
                 <option value="{{ empleado }}">{{ empleado }}</option>
             {% endfor %}
         </select>
+    
         <button type="submit">Filtrar</button>
     </form>
+    
+    <!-- Inicializa flatpickr en el campo de fecha -->
+    <script>
+        flatpickr("#fecha_filtro", {
+            dateFormat: "Y-m-d", // Formato de fecha
+        });
+    </script>
     <div id="w"></div>
 
     <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
