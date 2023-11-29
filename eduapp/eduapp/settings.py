@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "field_journal",
+    "schools", 
 ]
 
 MIDDLEWARE = [

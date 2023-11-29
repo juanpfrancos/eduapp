@@ -1,0 +1,16 @@
+<!-- schoolapp/templates/schoolapp/add_school.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add School</title>
+</head>
+<body>
+    <h2>Add School</h2>
+    <form method="post" action="{% url 'add_school' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'school_list' %}">Back to School List</a>
+</body>
+</html>
