@@ -10,7 +10,7 @@
         <select name="empleado_filtro" id="empleado_filtro">
             <option value="">Todos los empleados</option>
             {% for empleado in empleados %}
-                <option value="{{ empleado }}">{{ empleado }}</option>
+                <option value="{{ empleado.0 }}">{{ empleado.1}}</option>
             {% endfor %}
         </select>
     
