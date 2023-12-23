@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "accounts",
     "field_journal",
     "schools", 
+    "students",
 ]
 
 MIDDLEWARE = [

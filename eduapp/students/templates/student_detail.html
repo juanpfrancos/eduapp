@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Detalles de estudiante</h2>
+  <img src="{{ student.picture }}" alt="{{ student.name }}" style="border-radius:50%; max-width:300px;">
+  <p>Nombre: {{ student.name }}</p>
+  <p>Fecha de Nacimiento: {{ student.date_of_birth }}</p>
+  <p>Activo: {{ student.active }}</p>
+  <!-- Agrega más campos según sea necesario -->
+  <a href="{% url 'student_update' pk=student.pk %}">Editar</a>
+  <a href="{% url 'student_delete' pk=student.pk %}">Eliminar</a>
+  <a href="{% url 'student_list' %}">Volver a la Lista</a>
+{% endblock %}

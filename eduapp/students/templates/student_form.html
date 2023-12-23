@@ -1,0 +1,41 @@
+<!-- myapp/templates/myapp/student_form.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{% if form.instance.pk %}Editar{% else %}Crear{% endif %} Estudiante</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Campo de nombre -->
+    {{ form.name.label_tag }}
+    {{ form.name }}
+
+    <!-- Campo de fecha de nacimiento con input de tipo 'date' -->
+    {{ form.date_of_birth.label_tag }}
+    <input type="date" name="{{ form.date_of_birth.name }}" value="{% if form.date_of_birth.value %}{{ form.date_of_birth.value|date:'Y-m-d' }}{% endif %}" required>
+
+    <!-- Campo de estado activo -->
+    {{ form.active.label_tag }}
+    {{ form.active }}
+
+    <!-- Campo de imagen -->
+    {{ form.picture.label_tag }}
+    {{ form.picture }}
+
+    <!-- Campo de RH -->
+    {{ form.rh.label_tag }}
+    {{ form.rh }}
+
+    <!-- Campo de alergias -->
+    {{ form.alergies.label_tag }}
+    {{ form.alergies }}
+
+    <!-- Campo de medicamentos -->
+    {{ form.medications.label_tag }}
+    {{ form.medications }}
+
+    <button type="submit">Guardar</button>
+  </form>
+  <a href="{% url 'student_list' %}">Volver a la Lista</a>
+{% endblock %}

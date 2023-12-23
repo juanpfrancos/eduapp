@@ -6,6 +6,7 @@ urlpatterns = [
     path("", include("accounts.urls")),
     path("", include("schools.urls")),
     path("", include("field_journal.urls")),
+    path("", include("students.urls")),
 ]
 
 handler404 = "eduapp.views.handler404"
