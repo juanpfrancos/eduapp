@@ -9,9 +9,3 @@ class Student(models.Model):
     alergies = models.CharField(max_length=100)
     medications = models.CharField(max_length=100)
     
-
-
-class Attendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date = models.DateField()
-    attended = models.BooleanField(default=False)

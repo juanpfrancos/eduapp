@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Lista de Asistencias</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="id_date">Filtrar por Fecha:</label>
+    <input type="date" name="date" required>
+    <button type="submit">Filtrar</button>
+  </form>
+  <ul>
+    {% for attendance in attendances %}
+      <li>{{ attendance.student.name }} - Asistió: {{ attendance.attended }} - Fecha: {{ attendance.date }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

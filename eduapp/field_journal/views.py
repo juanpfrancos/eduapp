@@ -1,5 +1,4 @@
 from django.views.generic import View
-
 from django.core.mail import EmailMessage
 from io import BytesIO
 from django.contrib.auth.decorators import user_passes_test

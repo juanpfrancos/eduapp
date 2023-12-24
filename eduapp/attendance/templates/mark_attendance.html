@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Registrar Asistencia</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for student in students %}
+      <label>
+        {{ student.name }}
+        <input type="checkbox" name="{{ student.id }}" {% if student.attendance.attended %}checked{% endif %}>
+      </label><br>
+    {% endfor %}
+    <label for="id_date">Fecha:</label>
+    <input type="date" name="date" required>
+    <button type="submit">Guardar Asistencia</button>
+  </form>
+  <a href="{% url 'attendance_list' %}">Ver Asistencias</a>
+{% endblock %}
