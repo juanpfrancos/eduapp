@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Student
-from .forms import StudentForm
+from ..models import Student, Observations
+from ..forms import StudentForm
 
 def student_list(request):
     students = Student.objects.all()
@@ -8,7 +8,8 @@ def student_list(request):
 
 def student_detail(request, pk):
     student = get_object_or_404(Student, pk=pk)
-    return render(request, 'student_detail.html', {'student': student})
+    observations = get_object_or_404(Observations, pk=pk)
+    return render(request, 'student_detail.html', {'student': student, 'observations': observations})
 
 def student_create(request):
     if request.method == 'POST':

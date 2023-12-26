@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Agregar Observación para {{ student.name }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.date.label_tag }}
+    <input type="date" name="{{ form.date.name }}" value="{% if form.date.value %}{{ now|date:"Y-m-d" }}{% endif %}" required>
+    {{ form.observation.label_tag }} {{ form.observation }}
+    <button type="submit">Guardar Observación</button>
+  </form>
+  <a href="{% url 'student_detail' pk=student.id %}">Volver a Detalles del Estudiante</a>
+{% endblock %}

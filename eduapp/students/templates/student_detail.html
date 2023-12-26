@@ -9,7 +9,34 @@
   <p>RH: {{ student.rh }}</p>
   <p>Alergies: {{ student.alergies }}</p>
   <p>medications: {{ student.medications }}</p>
+  
+  <details>
+    <summary>Observaciones:</summary>
+    <ul>
+      {% for observation in student.get_observations %}
+        <li>{{ observation.date }}: {{ observation.observation }}</li>
+      {% endfor %}
+    </ul>
+  </details>
+
+
+
+
+  <div class="card card-primary card-center">
+    <img class="card-img-top card-img-center" src="imagen.jpg" alt="Imagen del usuario">
+    <div class="card-body">
+      <h2 class="card-title card-title-center">Nombre del usuario</h2>
+      <p class="card-text card-text-center">
+        Información del usuario, como su edad, ubicación, intereses, etc.
+      </p>
+    </div>
+  </div>
+  
+
   <a href="{% url 'student_update' pk=student.pk %}">Editar</a>
   <a href="{% url 'student_delete' pk=student.pk %}">Eliminar</a>
   <a href="{% url 'student_list' %}">Volver a la Lista</a>
+
+  <a href="{% url 'add_observation' student_id=student.id %}">Agregar Observación</a>
+
 {% endblock %}
