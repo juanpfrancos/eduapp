@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from ..forms import RegistrationForm, LoginForm
 
+@user_passes_test(lambda u: u.is_authenticated and u.role == 'supadmin', login_url='/')
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -51,4 +52,11 @@ def user_role(request):
 
 @user_passes_test(lambda u: u.is_authenticated and u.role == 'admin', login_url='/')
 def admin_role(request):
-    return render(request, 'home/admin.html')
+    user = request.user
+    context = {
+        'username': user.name,
+        'email': user.email,
+        'role': user.role,
+        'school': user.school.name_school if user.school else 'No school assigned',
+    }
+    return render(request, 'home/admin.html', context)
