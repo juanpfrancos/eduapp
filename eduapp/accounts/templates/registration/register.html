@@ -5,6 +5,7 @@
     {% csrf_token %}
     <div class="grid">
       <div>
+        <h1>{{context.school}}</h1>
         {{ form.name.label_tag }}
         {{ form.name }}
         <br>
@@ -21,6 +22,7 @@
         {{ form.password2 }}
       </div>
       <div>
+        {{ form.role.label_tag }}
         {{ form.role }}
       </div>
       <div>

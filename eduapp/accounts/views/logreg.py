@@ -2,16 +2,27 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from ..forms import RegistrationForm, LoginForm
+from schools.models import School
 
-@user_passes_test(lambda u: u.is_authenticated and u.role == 'supadmin', login_url='/')
+@user_passes_test(lambda u: u.is_authenticated and u.role == 'supadmin' or u.role =='admin', login_url='/')
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
+        else:
+            print(form.errors)
     else:
-        form = RegistrationForm()
+        if request.user.role == 'admin':
+            school_id = School.objects.filter(name_school=request.user.school).values('id').first().get('id')
+            choices = [(school_id, request.user.school)]
+            form = RegistrationForm(initial={'school': request.user.school})
+            form.fields['school'].widget.choices = choices
+            form.fields['school'].initial = request.user.school
+            form.fields['school'].widget.attrs['readonly'] = True
+        else:
+            form = RegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
 
 def user_login(request):
