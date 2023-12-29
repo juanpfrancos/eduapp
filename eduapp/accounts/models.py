@@ -25,7 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=90)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    role = models.CharField(max_length=20, choices=[('admin', 'Admin'), ('user', 'User')], default='user')
+    role = models.CharField(max_length=20, choices=[('admin', 'Admin'), ('teacher', 'Teacher')], default='teacher')
     school = models.ForeignKey(School, on_delete=models.CASCADE, default=None, null=True, blank=True)
     objects = CustomUserManager()
 

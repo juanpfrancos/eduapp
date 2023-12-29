@@ -12,7 +12,7 @@ from decouple import config
 import pandas as pd
 
 
-@user_passes_test(lambda u: u.is_authenticated and u.role == 'user', login_url='/')
+@user_passes_test(lambda u: u.is_authenticated and u.role == 'teacher', login_url='/')
 def crear_registro(request):
     if request.method == 'POST':
         form_data = request.POST.copy()

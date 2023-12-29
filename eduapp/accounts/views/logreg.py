@@ -15,8 +15,7 @@ def register(request):
             print(form.errors)
     else:
         if request.user.role == 'admin':
-            school_id = School.objects.filter(name_school=request.user.school).values('id').first().get('id')
-            choices = [(school_id, request.user.school)]
+            choices = [(request.user.school.id, request.user.school)]
             form = RegistrationForm(initial={'school': request.user.school})
             form.fields['school'].widget.choices = choices
             form.fields['school'].initial = request.user.school
@@ -27,8 +26,8 @@ def register(request):
 
 def user_login(request):
     if request.user.is_authenticated:
-        if request.user.role == 'user':
-            return redirect('user')
+        if request.user.role == 'teacher':
+            return redirect('teacher')
         elif request.user.role == 'admin':
             return redirect('admin')
 
@@ -37,8 +36,8 @@ def user_login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            if user.role == 'user':
-                return redirect('user')
+            if user.role == 'teacher':
+                return redirect('teacher')
             elif user.role == 'admin':
                 return redirect('admin')
     else:
@@ -50,7 +49,7 @@ def user_logout(request):
     return redirect('login')
 
 
-@user_passes_test(lambda u: u.is_authenticated and u.role == 'user', login_url='/')
+@user_passes_test(lambda u: u.is_authenticated and u.role == 'teacher', login_url='/')
 def user_role(request):
     user = request.user
     context = {
@@ -58,7 +57,7 @@ def user_role(request):
         'email': user.email,
         'role': user.role,
     }
-    return render(request, 'home/user.html', context)
+    return render(request, 'home/teacher.html', context)
 
 
 @user_passes_test(lambda u: u.is_authenticated and u.role == 'admin', login_url='/')

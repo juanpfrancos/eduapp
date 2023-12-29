@@ -1,5 +1,3 @@
-<!-- myapp/templates/myapp/student_form.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -19,10 +17,6 @@
     {{ form.active.label_tag }}
     {{ form.active }}
 
-    <!-- Campo de imagen -->
-    {{ form.picture.label_tag }}
-    {{ form.picture }}
-
     <!-- Campo de RH -->
     {{ form.rh.label_tag }}
     {{ form.rh }}
@@ -34,6 +28,13 @@
     <!-- Campo de medicamentos -->
     {{ form.medications.label_tag }}
     {{ form.medications }}
+
+    {{ form.school.label_tag }}
+    {{ form.school }}
+
+    {{ form.temporary_photo.label_tag }} {{ form.temporary_photo }}
+    {{ form.temporary_photo.errors }}
+
 
     <button type="submit">Guardar</button>
   </form>

@@ -15,7 +15,7 @@ urlpatterns = [
     path('register/', logreg.register, name='register'),
     path('logout/', logreg.user_logout, name='logout'),
     path('admin/', logreg.admin_role, name='admin'),
-    path('user/', logreg.user_role, name='user'),
+    path('teacher/', logreg.user_role, name='teacher'),
     path('reset/', include(reset_patterns)),
 ]
 
