@@ -4,14 +4,15 @@ from ..models import Student, Observations
 from ..forms import StudentForm
 from decouple import config
 import requests
-import PIL.Image
+from PIL import Image
 import io
 
 ENDPOINT = config('BUCKET_ENDPOINT')
 
 @user_passes_test(lambda u: (u.is_authenticated and u.role == 'teacher') or (u.is_authenticated and u.role == 'admin'), login_url='/')
 def student_list(request):
-    students = Student.objects.all()
+    user_school = request.user.school
+    students = Student.objects.filter(school=user_school)
     return render(request, 'student_list.html', {'students': students})
 
 
@@ -73,8 +74,8 @@ def up_image(school,id,file):
     return response.status_code
 
 def resize_image(file):
-    image = PIL.Image.open(file)
     output_bytes = io.BytesIO()
-    image = image.resize((500, 500))
+    image = Image.open(file)
+    image = image.resize((500, 500), Image.BILINEAR)
     image.save(output_bytes, 'WEBP', quality=80, optimize=True)
     return output_bytes.getvalue()
