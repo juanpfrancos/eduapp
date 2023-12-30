@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import user_passes_test
 from students.models import Student
 from .models import Attendance
 from .forms import AttendanceForm
@@ -6,9 +7,10 @@ from datetime import datetime
 from django.utils import timezone
 
 
+@user_passes_test(lambda u: (u.is_authenticated and u.role == 'teacher') or (u.is_authenticated and u.role == 'admin'), login_url='/')
 def mark_attendance(request):
-    students = Student.objects.all()
-    
+    user_school = request.user.school
+    students = Student.objects.filter(school=user_school)  
     if request.method == 'POST':
         for student in students:
             attended = request.POST.get(str(student.id))
@@ -23,7 +25,7 @@ def mark_attendance(request):
 
     return render(request, 'mark_attendance.html', {'students': students, 'form': form})
 
-
+@user_passes_test(lambda u: (u.is_authenticated and u.role == 'teacher') or (u.is_authenticated and u.role == 'admin'), login_url='/')
 def attendance_list(request):
     if request.method == 'POST' and request.POST.get('date'):
         date_str = request.POST.get('date')
