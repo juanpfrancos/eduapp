@@ -12,8 +12,14 @@ class Student(models.Model):
     
     def get_observations(self):
         return Observations.objects.filter(student=self)
+    
+    def __str__(self):
+        return self.name + " - " + self.school.name_school
 
 class Observations(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date = models.DateField()
     observation = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.student.name} - {self.observation}"

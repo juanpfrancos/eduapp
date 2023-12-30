@@ -67,6 +67,7 @@ def up_image(school,id,file):
     headers = {
     'Content-Type': 'image/webp'
     }
+
     image = resize_image(file)
     response = requests.request("PUT", url, headers=headers, data=image)
     return response.status_code
