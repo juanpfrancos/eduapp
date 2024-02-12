@@ -2,13 +2,10 @@ from django.views.generic import View
 from django.core.mail import EmailMessage
 from io import BytesIO
 from django.contrib.auth.decorators import user_passes_test
-from django.utils.datetime_safe import datetime
 from django.shortcuts import render, redirect, HttpResponse
 from .forms import RegistroForm
 from .models import Registro
-from json import dumps 
 from datetime import datetime
-from decouple import config
 import pandas as pd
 
 
@@ -16,11 +13,11 @@ import pandas as pd
 def crear_registro(request):
     if request.method == 'POST':
         form_data = request.POST.copy()
-        form_data['empleado'] = request.user.name
+        form_data['employee'] = request.user.name
         form = RegistroForm(form_data)
         if form.is_valid():
             registro = form.save(commit=False)
-            registro.empleado = request.user
+            registro.employee = request.user
             registro.save()
             return redirect('lista_registros')
         else:
@@ -33,25 +30,26 @@ def crear_registro(request):
 @user_passes_test(lambda u: u.is_authenticated and u.role == 'admin', login_url='/')
 def lista_registros(request):
     admin_school = request.user.school
-    registros = Registro.objects.filter(empleado__school=admin_school)
-    fechas = registros.values_list('fecha', flat=True).distinct()
-    empleados = registros.values_list('empleado__id', 'empleado__name').distinct()
+    registros = Registro.objects.filter(employee__school=admin_school)
+    dates = registros.values_list('date', flat=True).distinct()
+    employees = registros.values_list('employee__id', 'employee__name').distinct()
 
-    fecha_filtro = request.GET.get('fecha_filtro')
-    empleado_filtro = request.GET.get('empleado_filtro')
+    date_filtro = request.GET.get('date_filter')
+    employee_filtro = request.GET.get('employee_filter')
 
-    if fecha_filtro:
-        fecha_filtro = datetime.strptime(fecha_filtro, '%Y-%m-%d')  # Parsear la fecha
-        registros = registros.filter(fecha=fecha_filtro)
-    if empleado_filtro:
-        registros = registros.filter(empleado=empleado_filtro)
+    if date_filtro:
+        date_filtro = datetime.strptime(date_filtro, '%Y-%m-%d')  # Parsear la date
+        registros = registros.filter(date=date_filtro)
+    if employee_filtro:
+        registros = registros.filter(employee=employee_filtro)
     data = list(registros.values())
-    registros = list(map(lambda item: {**item, 'fecha': item['fecha'].strftime('%Y-%m-%d')}, data))
+    registros = list(map(lambda item: {**item, 'date': item['date'].strftime('%Y-%m-%d')}, data))
     final = [{key: str(value) for key, value in data.items()} for data in registros]
-    return render(request, 'lista_registros.html', {
-        'registros': dumps(final),
-        'fechas': fechas,
-        'empleados': empleados,
+    print(employees.all)
+    return render(request, 'swiper.html', {
+        'registros': final,
+        'dates': dates,
+        'employees': employees,
     })
 
 
@@ -62,21 +60,21 @@ def lista_registros(request):
 def send_email_view(request):
     try:
         admin_school = request.user.school
-        registros = Registro.objects.filter(empleado__school=admin_school)
+        registros = Registro.objects.filter(employee__school=admin_school)
 
-        fecha_filtro = request.GET.get('fecha_filtro')
-        empleado_filtro = request.GET.get('empleado_filtro')
+        date_filtro = request.GET.get('date_filtro')
+        employee_filtro = request.GET.get('employee_filtro')
 
         filters = {}
-        if fecha_filtro:
-            filters['fecha'] = datetime.strptime(fecha_filtro, '%Y-%m-%d')
-        if empleado_filtro:
-            filters['empleado'] = empleado_filtro
+        if date_filtro:
+            filters['date'] = datetime.strptime(date_filtro, '%Y-%m-%d')
+        if employee_filtro:
+            filters['employee'] = employee_filtro
 
         registros = registros.filter(**filters)
 
         data = list(registros.values())
-        registros = [{**item, 'fecha': item['fecha'].strftime('%Y-%m-%d')} for item in data]
+        registros = [{**item, 'date': item['date'].strftime('%Y-%m-%d')} for item in data]
         final = [{key: str(value) for key, value in item.items()} for item in registros]
         file_ = create_xlsx(final)
 
@@ -88,7 +86,7 @@ def send_email_view(request):
         return HttpResponse('Correo enviado')
 
     except ValueError as e:
-        return HttpResponse(f'Error al parsear la fecha: {str(e)}')
+        return HttpResponse(f'Error al parsear la date: {str(e)}')
     except Exception as e:
         return HttpResponse(f'Ocurrió un error: {str(e)}')
 

@@ -1,0 +1,51 @@
+
+
+{% extends 'base_swiper.html' %}
+{% block content %}
+    <h1>Lista de Registros Diarios</h1>    
+    <form method="GET">
+        <label for="date_filter">Filtrar por Fecha:</label>
+        <input type="date" name="date_filter" id="date_filter">
+    
+        <label for="employee_filter">Filtrar por Empleado:</label>
+        <select name="employee_filter" id="employee_filter">
+            <option value="">Todos los empleados</option>
+            {% for employee in employees %}
+                <option value="{{ employee.0 }}">{{ employee.1}}</option>
+            {% endfor %}
+        </select>
+    
+        <button type="submit">Filtrar</button>
+    </form>
+    <a href="{% url 'enviar_correo' %}"><button id="enviar-correo">Enviar correo</button></a>
+    {{registros}}
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for reg in registros %}
+        <div class="swiper-slide">
+          <h1>Registro {{ reg.id }}</h1>
+          <p>Fecha: {{ reg.date }}</p>
+          <p>Empleado: {{ reg.employee_id.pk }}</p>
+          <p>Tiempo suficiente: {{ reg.enough_time }}</p>
+          <p>Actividades interesantes: {{ reg.interesting_activities }}</p>
+          <p>Material agradable: {{ reg.nice_materials }}</p>
+          <p>Trabajo fuera de aula: {{ reg.outside_working }}</p>
+          <p>Involucrados: {{ reg.involved }}</p>
+          <p>Atentos: {{ reg.attentive }}</p>
+          <p>Interrupciones: {{ reg.interruptions }}</p>
+          <p>Influencias: {{ reg.influences }}</p>
+          <p>Situación relevante: {{ reg.relevant_situation }}</p>
+        </div>
+
+
+        {% endfor %}
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+      });
+    </script>
+{% endblock %}

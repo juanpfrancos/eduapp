@@ -4,23 +4,23 @@ from accounts.models import CustomUser
 
 class Registro(models.Model):
     id = models.AutoField(primary_key=True)
-    fecha = models.DateField(default=timezone.now)
-    empleado = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    tiempo_suficiente = models.BooleanField()
-    actividades_interesantes = models.BooleanField()
-    material_agradable = models.BooleanField()
-    trabajo_fuera_aula = models.BooleanField()
-    involucrados = models.CharField(
+    date = models.DateField(default=timezone.now)
+    employee = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    enough_time = models.BooleanField()
+    interesting_activities = models.BooleanField()
+    nice_materials = models.BooleanField()
+    outside_working = models.BooleanField()
+    involved = models.CharField(
         max_length=10,
         choices=[('TODOS', 'TODOS'), ('ALGUNOS', 'ALGUNOS'), ('POCOS', 'POCOS')]
     )
-    atentos = models.CharField(
+    attentive = models.CharField(
         max_length=10,
         choices=[('TODOS', 'TODOS'), ('ALGUNOS', 'ALGUNOS'), ('POCOS', 'POCOS')]
     )
-    interrupciones = models.BooleanField()
-    influencias = models.TextField()
-    situacion_relevante = models.TextField()
+    interruptions = models.BooleanField()
+    influences = models.TextField()
+    relevant_situation = models.TextField()
 
     def __str__(self):
         return f"{self.fecha} - {self.empleado}"
